@@ -1,0 +1,62 @@
+<div class="get-machines">
+
+    <div class="table-title">
+
+        <h2>Máquinas em Estoque</h2>
+
+        {{#if machine}}
+        <table class="machines-table">
+
+            <tr>
+                <th>ID</th>
+                <th>Hostname</th>
+                <th>Patrimonio</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>Sistema Operacional</th>
+                <th></th>
+
+            </tr>
+            <tr>
+
+                {{#each machine}}
+
+                <td>
+                    {{id}}
+                </td>
+                <td>
+                    {{hostname}}
+                </td>
+                <td>
+                    {{patrimonio}}
+                </td>
+                <td>
+                    {{modelo}}
+                </td>
+                <td>
+                    {{type}}
+                </td>
+                <td>
+                    {{os}}
+                </td>
+                <td>
+                    <a href="/getmachine/editmachine/{{id}}" class="btn-edit">
+                        <i class="bi bi-pencil-square btn-edit"></i>
+                    </a>
+                </td>
+
+            </tr>
+            {{/each}}
+        </table>
+
+        {{else}}
+        <p>Não foi encontrada nenhuma máquina com este ID no estoque :/</p>
+        {{/if}}
+    </div>
+
+</div>
+<div class="tools">
+
+    <a href="/">Mostrar todas</a>
+
+</div>

@@ -1,0 +1,130 @@
+<div class="get-machines">
+
+    <div class="table-title">
+
+        <h2>Máquinas em Estoque <p>
+                ({{machineAmount}})
+            </p>
+        </h2>
+
+    <button class="add-btn">
+        <i class="bi bi-plus"></i>
+    </button>
+
+
+        <table class="machines-table">
+
+            <tr>
+                <th>ID</th>
+                <th>Hostname</th>
+                <th>Patrimonio</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>Sistema Operacional</th>
+                <th></th>
+
+            </tr>
+            <tr>
+                {{#each machines}}
+
+                <td>
+                    {{id}}
+                </td>
+                <td>
+                    {{hostname}}
+                </td>
+                <td>
+                    {{patrimonio}}
+                </td>
+                <td>
+                    {{modelo}}
+                </td>
+                <td>
+                    {{type}}
+                </td>
+                <td>
+                    {{os}}
+                </td>
+                <td>
+                    <a href="/getmachine/editmachine/{{id}}" class="btn-edit">
+                        <i class="bi bi-pencil-square btn-edit"></i>
+                    </a>
+                </td>
+
+            </tr>
+            {{/each}}
+
+        </table>
+    </div>
+
+    <div class="tools">
+
+            <div class="tools-search">
+                <h4>Filtros 
+                    <i class="bi bi-filter"></i>
+                </h4>
+                <form action="/getmachine/filterbytype" class="filter-form" method="get">
+                    <div>
+                        <input type="checkbox" name="onlyLaptops" class="filter-input">
+                        <label for="onlyLaptops">Notebooks</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="onlyDesktops" class="filter-input">
+                        <label for="onlyDesktops">Desktops</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="onlyServers" class="filter-input">
+                        <label for="onlyServers">Servidor</label>
+                    </div>
+
+                    <button type="submit" class="filter-button">Filtrar</button>
+                </form>
+
+            </div>
+        </div>
+
+</div>
+
+<div class="form-popup" id="p">
+
+    <div class="container-popup">
+
+        <h3>Insira as informações abaixo para cadastrar uma máquina:</h3>
+
+
+        <form class="insert-form">
+
+            <label for="hostname">Qual o hostname?</label>
+            <input class="form-input" type="text" name="hostname" id="hostname" placeholder="Hostname" required>
+            <label for="hostname">Qual o patrimonio?</label>
+            <input class="form-input" type="number" name="patrimonio" id="patrimonio" placeholder="Patrimonio" required>
+            <label for="hostname">Qual o modelo?</label>
+            <input class="form-input" type="text" name="modelo" id="modelo" placeholder="Modelo" required>
+            <label for="text">Qual o tipo?</label>
+            <input class="form-input" type="text" name="type" id="type" placeholder="Notebook ou Desktop" required>
+            <label for="hostname">Qual o sistema operacional instalado?</label>
+            <input class="form-input" type="text" name="os" id="os" placeholder="Sistema Operacional" required>
+
+            <button type="submit" class="insert-btn">
+                Adicionar
+            </button>
+
+        </form>
+
+        <div class="popup" id="popup-insert-done">
+            <div class="popup-confirmation">
+                <i class="fa-solid fa-circle-check check-icon"></i>
+                <h3>Máquina adicionada ao estoque!!!</h3>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="popup pop-invalid">
+    <div class="popup-confirmation">
+        <i class="fa-solid fa-circle-xmark x-icon"></i>
+        <h3>Selecione uma opção para filtragem!</h3>
+    </div>
+</div>

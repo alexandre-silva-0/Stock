@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de maquina</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <nav class="navbar">
+
+
+        <a href="/">Stock</a>
+
+
+        <form action="/getmachine/searchmachinebyid/{{id}}" method="get" class="search-form">
+            <input type="number" name="machineid" placeholder="Procurar por ID..." class="search-input">
+            <button type="submit" class="btn-search">
+                <i class="bi bi-search btn-search"></i>
+            </button>
+
+        </form>
+
+    </nav>
+
+    <div class="content">
+
+        <div class="tools">
+
+            <div class="tools-search">
+                <h4>Filtros 
+                    <i class="bi bi-filter"></i>
+                </h4>
+                <form action="/getmachine/filterbytype" class="filter-form" method="get">
+                    <div>
+                        <input type="checkbox" name="onlyLaptops" class="filter-input">
+                        <label for="onlyLaptops">Notebooks</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="onlyDesktops" class="filter-input">
+                        <label for="onlyDesktops">Desktops</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="onlyServers" class="filter-input">
+                        <label for="onlyServers">Servidor</label>
+                    </div>
+
+                    <button type="submit" class="filter-button">Filtrar</button>
+                </form>
+
+            </div>
+        </div>
+
+        {{{body}}}
+    </div>
+
+    <script src="/js/getmachine.js"></script>
+    <script src="/js/editmachine.js"></script>
+</body>
+
+</html>

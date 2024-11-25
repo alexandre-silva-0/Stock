@@ -1,0 +1,67 @@
+<div class="get-machines">
+
+    <div class="table-title">
+
+        <h2>{{type}}(s) em Estoque
+            (<p>
+                {{machineFiltered.amount}}
+            </p>)
+        </h2>
+
+       <button class="add-btn">
+        <i class="bi bi-plus"></i>
+    </button>
+
+        <table class="machines-table">
+
+            <tr>
+                <th>ID</th>
+                <th>Hostname</th>
+                <th>Patrimonio</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>Sistema Operacional</th>
+                <th></th>
+
+            </tr>
+            <tr>
+
+                {{#if machineFiltered}}
+                {{#each machineFiltered}}
+
+                <td>
+                    {{id}}
+                </td>
+                <td>
+                    {{hostname}}
+                </td>
+                <td>
+                    {{patrimonio}}
+                </td>
+                <td>
+                    {{modelo}}
+                </td>
+                <td>
+                    {{type}}
+                </td>
+                <td>
+                    {{os}}
+                </td>
+                <td>
+                    <a href="/getmachine/editmachine/{{id}}" class="btn-edit">
+                        <i class="bi bi-pencil-square btn-edit"></i>
+                    </a>
+                </td>
+
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+
+
+    </div>
+
+</div>
+
+    <a href="/" class="show-all">Mostrar todas</a>
+

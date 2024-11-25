@@ -1,0 +1,43 @@
+<div class="container-popup">
+
+    <h3>Atualize abaixo as informações da máquina:</h3>
+
+    <form class="edit-form">
+
+        <input type="hidden" name="id" id="id" value="{{machine.id}}">
+        <label for="hostname">Qual o hostname?</label>
+        <input class="form-input" type="text" name="hostname" id="hostname" placeholder="Hostname"
+            value="{{machine.hostname}}">
+        <label for="hostname">Qual o patrimonio?</label>
+        <input class="form-input" type="number" name="patrimonio" id="patrimonio" placeholder="Patrimonio"
+            value="{{machine.patrimonio}}">
+        <label for="hostname">Qual o modelo?</label>
+        <input class="form-input" type="text" name="modelo" id="modelo" placeholder="Modelo" value="{{machine.modelo}}">
+        <label for="text">Qual o tipo?</label>
+        <input class="form-input" type="text" name="type" id="type" placeholder="Notebook ou Desktop"
+            value="{{machine.type}}">
+        <label for="hostname">Qual o sistema operacional instalado?</label>
+        <input class="form-input" type="text" name="os" id="os" placeholder="Sistema Operacional"
+            value="{{machine.os}}">
+
+        <div class="options-btn">
+
+            <button type="submit" class="edit-btn edited-btn">
+                <i class="bi bi-check-circle-fill"></i>
+            </button>
+
+            <button type="submit" class="edit-btn delete-btn">
+                <i class="bi bi-trash3-fill"></i>
+            </button>
+
+        </div>
+    </form>
+
+    <div class="popup" id="popup-removed-machine">
+        <div class="popup-confirmation">
+            <i class="fa-solid fa-circle-check check-icon"></i>
+            <h3 id="server-resp"></h3>
+        </div>
+    </div>
+
+</div>

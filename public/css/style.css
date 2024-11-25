@@ -1,0 +1,16 @@
+@import url('./main.css');
+@import url('./getmachine.css');
+@import url('./home.css');
+@import url('./insertmachine.css');
+
+:root{
+
+    --main-green: #204E4D;
+    --white: #fff;
+    --black: #000;
+
+}
+
+*{
+    transition: ease-in-out 0.1s;
+}
