@@ -23,7 +23,7 @@ app.set('view engine', 'handlebars')
 //config css
 app.use(express.static('public'))
 
-
+//Post to insert new registers 
 app.post('/machines/insertmachine', (req, res) => {
     const hostname = req.body.hostname
     const patrimonio = req.body.patrimonio
@@ -31,9 +31,10 @@ app.post('/machines/insertmachine', (req, res) => {
     const os = req.body.os
     const type = req.body.type
 
-    const query = `INSERT INTO machine (hostname, patrimonio, modelo,type, os) VALUES ('${hostname}', ${patrimonio}, '${modelo}', '${type}', '${os}')`
+    const query = `INSERT INTO machine (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?)`
+    const data = ['hostname', 'patrimonio', 'modelo', 'type', 'os', hostname, patrimonio, modelo, type, os]
 
-    conn.query(query, function (err, data) {
+    conn.query(query, data, function (err, data) {
         if (err) {
             console.log(err)
         }
@@ -49,7 +50,7 @@ app.post('/machines/insertmachine', (req, res) => {
 app.get('/', (req, res) => {
 
     const query = 'SELECT * FROM machine'
-    const queryAmount = `SELECT count(*) as amount FROM estoque.machine`
+    const queryAmount = `SELECT count(*) as amount FROM machine`
 
     conn.query(query, function (er, data1) {
 
@@ -69,15 +70,8 @@ app.get('/', (req, res) => {
 
 })
 
-//config mysql
-const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '159188',
-    database: 'estoque',
-})
-
-app.get('/getmachine/editmachine/:id', (req, res) => {
+//Edit 
+app.get('/:id', (req, res) => {
 
     const id = req.params.id
 
@@ -93,13 +87,14 @@ app.get('/getmachine/editmachine/:id', (req, res) => {
 
 
         const machine = data[0]
-        res.render('editmachine', { machine, layout: 'edit' })
+        res.send( { machine })
 
     })
 
 
 })
 
+//Post to update a machine information
 app.post('/machine/edited', (req, res) => {
     const id = req.body.id
     const hostname = req.body.hostname
@@ -108,9 +103,10 @@ app.post('/machine/edited', (req, res) => {
     const os = req.body.os
     const type = req.body.type
 
-    const query = `UPDATE machine SET hostname = '${hostname}', patrimonio = ${patrimonio}, modelo = '${modelo}', os = '${os}', type = '${type}' WHERE id = ${id}`
+    const query = `UPDATE machine SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?`
+    const data = ['hostname', hostname, 'patrimonio', patrimonio, 'modelo', modelo, 'os', os, 'type', type, 'id', id]
 
-    conn.query(query, (err, data) => {
+    conn.query(query, data, (err, data) => {
 
         if (err) {
             console.log(err)
@@ -123,6 +119,8 @@ app.post('/machine/edited', (req, res) => {
 
 })
 
+
+//Search by machine id 
 app.get('/getmachine/searchmachinebyid', (req, res) => {
 
     const id = req.query.machineid
@@ -143,6 +141,7 @@ app.get('/getmachine/searchmachinebyid', (req, res) => {
 
 })
 
+//Response to filter by 
 app.get('/getmachine/filterbytype', (req, res) => {
     const { onlyLaptops, onlyDesktops, onlyServers } = req.query;
 
@@ -160,7 +159,7 @@ app.get('/getmachine/filterbytype', (req, res) => {
         return 'alert("dasd")'
     }
 
-    const queryAmount ='SELECT COUNT(*) FROM machine WHERE type= ?;' 
+    const queryAmount = 'SELECT COUNT(*) FROM machine WHERE type= ?;'
     const query = 'SELECT * FROM machine WHERE type = ?';
     const type = types[filterKey];
 
@@ -169,44 +168,53 @@ app.get('/getmachine/filterbytype', (req, res) => {
             console.error(err);
             return res.status(500).send('Erro ao buscar máquinas.');
         }
-        
+
         const amount = conn.query(queryAmount, [type], (err, data) => {
         })
-        
-        res.render('filterbytype', { machineFiltered: data1, type, amount } );
+
+        res.render('filterbytype', { machineFiltered: data1, type, amount });
 
     });
 });
 
+
+//Response to invalid filter
 app.get('/noneselected', (req, res) => {
 
     res.send('Por favor, selecionar uma opção!')
 
 })
 
+//Delete registers 
 app.post('/deletemachine', (req, res) => {
 
     const id = req.body.id
 
-    // console.log(id);
+    const query = `DELETE FROM machine WHERE ?? = ?`
+    const data = ['id', id
 
-    const query = `DELETE FROM machine WHERE id = ${id}`
+    ]
 
-    conn.query(query, (err, data) => {
+    conn.query(query, data, (err, data) => {
 
-        if(err){
+        if (err) {
             console.log(err)
             return res.status(500).send('Erro ao apagar máquina.')
         }
-
         res.send('Máquina apagada com sucesso!')
-
     })
-
-
 })
 
 //estabelecendo conexao com banco e iniciando servidor
+
+//config mysql
+const conn = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '159188',
+    database: 'estoque',
+})
+
 conn.connect((err) => {
 
     if (err) {

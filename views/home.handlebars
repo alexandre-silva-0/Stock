@@ -7,11 +7,11 @@
             </p>
         </h2>
 
-    <button class="add-btn">
-        <i class="bi bi-plus"></i>
-    </button>
+        <button class="add-btn">
+            <i class="bi bi-plus"></i>
+        </button>
 
-
+        {{!-- Tabela com todas as informações das máquinas registradas --}}
         <table class="machines-table">
 
             <tr>
@@ -28,6 +28,7 @@
                 {{#each machines}}
 
                 <td>
+                    <input type="hidden" class="get-id" value="{{id}}">
                     {{id}}
                 </td>
                 <td>
@@ -46,9 +47,9 @@
                     {{os}}
                 </td>
                 <td>
-                    <a href="/getmachine/editmachine/{{id}}" class="btn-edit">
-                        <i class="bi bi-pencil-square btn-edit"></i>
-                    </a>
+                    <button class="btn-edit">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
                 </td>
 
             </tr>
@@ -57,35 +58,38 @@
         </table>
     </div>
 
+
+    {{!-- Filtros --}}
     <div class="tools">
 
-            <div class="tools-search">
-                <h4>Filtros 
-                    <i class="bi bi-filter"></i>
-                </h4>
-                <form action="/getmachine/filterbytype" class="filter-form" method="get">
-                    <div>
-                        <input type="checkbox" name="onlyLaptops" class="filter-input">
-                        <label for="onlyLaptops">Notebooks</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="onlyDesktops" class="filter-input">
-                        <label for="onlyDesktops">Desktops</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="onlyServers" class="filter-input">
-                        <label for="onlyServers">Servidor</label>
-                    </div>
+        <div class="tools-search">
+            <h4>Filtros
+                <i class="bi bi-filter"></i>
+            </h4>
+            <form action="/getmachine/filterbytype" class="filter-form" method="get">
+                <div>
+                    <input type="checkbox" name="onlyLaptops" class="filter-input">
+                    <label for="onlyLaptops">Notebooks</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="onlyDesktops" class="filter-input">
+                    <label for="onlyDesktops">Desktops</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="onlyServers" class="filter-input">
+                    <label for="onlyServers">Servidor</label>
+                </div>
 
-                    <button type="submit" class="filter-button">Filtrar</button>
-                </form>
+                <button type="submit" class="filter-button">Filtrar</button>
+            </form>
 
-            </div>
         </div>
+    </div>
 
 </div>
 
-<div class="form-popup" id="p">
+{{!-- Formulário de inserção de máquinas ao banco --}}
+<div class="form-popup" id="insert-popup">
 
     <div class="container-popup">
 
@@ -95,22 +99,24 @@
         <form class="insert-form">
 
             <label for="hostname">Qual o hostname?</label>
-            <input class="form-input" type="text" name="hostname" id="hostname" placeholder="Hostname" required>
+            <input class="form-input" type="text" name="hostname" id="insert-hostname" placeholder="Hostname" required>
             <label for="hostname">Qual o patrimonio?</label>
-            <input class="form-input" type="number" name="patrimonio" id="patrimonio" placeholder="Patrimonio" required>
+            <input class="form-input" type="number" name="patrimonio" id="insert-patrimonio" placeholder="Patrimonio"
+                required>
             <label for="hostname">Qual o modelo?</label>
-            <input class="form-input" type="text" name="modelo" id="modelo" placeholder="Modelo" required>
+            <input class="form-input" type="text" name="modelo" id="insert-modelo" placeholder="Modelo" required>
             <label for="text">Qual o tipo?</label>
-            <input class="form-input" type="text" name="type" id="type" placeholder="Notebook ou Desktop" required>
+            <input class="form-input" type="text" name="type" id="insert-type" placeholder="Notebook ou Desktop"
+                required>
             <label for="hostname">Qual o sistema operacional instalado?</label>
-            <input class="form-input" type="text" name="os" id="os" placeholder="Sistema Operacional" required>
+            <input class="form-input" type="text" name="os" id="insert-os" placeholder="Sistema Operacional" required>
 
             <button type="submit" class="insert-btn">
                 Adicionar
             </button>
 
         </form>
-
+        {{!-- PopUp de inserção bem-sucedida --}}
         <div class="popup" id="popup-insert-done">
             <div class="popup-confirmation">
                 <i class="fa-solid fa-circle-check check-icon"></i>
@@ -122,6 +128,55 @@
 
 </div>
 
+<div class="form-popup" id="edit-popup">
+    <div class="container-popup">
+
+        <h3>Atualize abaixo as informações da máquina:</h3>
+
+        <form class="edit-form">
+
+            <input type="hidden" name="id" id="id" value="{{machine.id}}">
+            <label for="hostname">Qual o hostname?</label>
+            <input class="form-input" type="text" name="hostname" id="edit-hostname" placeholder="Hostname"
+                value="{{machine.hostname}}">
+            <label for="hostname">Qual o patrimonio?</label>
+            <input class="form-input" type="number" name="patrimonio" id="edit-patrimonio" placeholder="Patrimonio"
+                value="{{machine.patrimonio}}">
+            <label for="hostname">Qual o modelo?</label>
+            <input class="form-input" type="text" name="modelo" id="edit-modelo" placeholder="Modelo"
+                value="{{machine.modelo}}">
+            <label for="text">Qual o tipo?</label>
+            <input class="form-input" type="text" name="type" id="edit-type" placeholder="Notebook ou Desktop"
+                value="{{machine.type}}">
+            <label for="hostname">Qual o sistema operacional instalado?</label>
+            <input class="form-input" type="text" name="os" id="edit-os" placeholder="Sistema Operacional"
+                value="{{machine.os}}">
+
+            <div class="options-btn">
+
+                <button type="submit" class="edit-btn edited-btn">
+                    <i class="bi bi-check-circle-fill"></i>
+                </button>
+
+                <button type="submit" class="edit-btn delete-btn">
+                    <i class="bi bi-trash3-fill"></i>
+                </button>
+
+            </div>
+        </form>
+
+        <div class="popup" id="popup-edited-machine">
+            <div class="popup-confirmation">
+                <i class="fa-solid fa-circle-check check-icon"></i>
+                <h3 id="server-resp"></h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{{!-- PopUp para notificar usuário de selecionar ao menos uma filtragem --}}
 <div class="popup pop-invalid">
     <div class="popup-confirmation">
         <i class="fa-solid fa-circle-xmark x-icon"></i>
